@@ -385,7 +385,10 @@ class BlenderEngine(Engine):
             if show_warning_dlg:
                 # Note, title is padded to try to ensure dialog isn't insanely
                 # narrow!
-                self.show_info(msg)
+                try:
+                    self.show_info(msg)
+                except ImportError:
+                    pass
 
             # always log the warning to the script editor:
             self.logger.warning(msg)
