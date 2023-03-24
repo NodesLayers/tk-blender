@@ -34,14 +34,14 @@ if ext_libs and os.path.exists(ext_libs):
         site.addsitedir(ext_libs)
 
 bl_info = {
-    "name": "Shotgun Bridge Plugin",
-    "description": "Shotgun Toolkit Engine for Blender",
+    "name": "ShotGrid Bridge Plugin",
+    "description": "ShotGrid Toolkit Engine for Blender",
     "author": "Diego Garcia Huerta",
     "license": "GPL",
     "deps": "",
     "version": (1, 0, 0),
     "blender": (2, 82, 0),
-    "location": "Shotgun",
+    "location": "ShotGrid",
     "warning": "",
     "wiki_url": "https://github.com/diegogarciahuerta/tk-blender/releases",
     "tracker_url": "https://github.com/diegogarciahuerta/tk-blender/issues",
@@ -54,7 +54,7 @@ bl_info = {
 PYSIDE2_MISSING_MESSAGE = (
     "\n"
     + "-" * 80
-    + "\nCould not import PySide2 as a Python module. Shotgun menu will not be available."
+    + "\nCould not import PySide2 as a Python module. ShotGrid menu will not be available."
     + "\n\nPlease check the engine documentation for more information:"
     + "\nhttps://github.com/diegogarciahuerta/tk-blender/edit/master/README.md\n"
     + "-" * 80
@@ -73,8 +73,8 @@ class ShotgunConsoleLog(bpy.types.Operator):
     A simple operator to log issues to the console.
     """
 
-    bl_idname = "shotgun.logger"
-    bl_label = "Shotgun Logger"
+    bl_idname = "shotgrid.logger"
+    bl_label = "ShotGrid Logger"
 
     message: bpy.props.StringProperty(name="message", description="message", default="")
 
@@ -137,13 +137,13 @@ class QtWindowEventLoop(bpy.types.Operator):
         wm.event_timer_remove(self._timer)
 
 
-class TOPBAR_MT_shotgun(Menu):
+class TOPBAR_MT_shotgrid(Menu):
     """
-    Creates the Shotgun top level menu
+    Creates the ShotGrid top level menu
     """
 
-    bl_label = "Shotgun"
-    bl_idname = "TOPBAR_MT_shotgun"
+    bl_label = "ShotGrid"
+    bl_idname = "TOPBAR_MT_shotgrid"
 
     def draw(self, context):
         import sgtk
@@ -219,7 +219,7 @@ def insert_main_menu(menu_class, before_menu_class):
 #     menubar.
 
 #     So we use a bit of a hack, by recreating the the same as what blender does
-#     to create it's own top level menus but adding the `Shotgun` menu right
+#     to create it's own top level menus but adding the `ShotGrid` menu right
 #     before `help` menu.
 
 #     Note that If the script to generate those menus was to change in Blender,
@@ -239,7 +239,7 @@ def insert_main_menu(menu_class, before_menu_class):
 #         layout.menu("TOPBAR_MT_render")
 
 #         layout.menu("TOPBAR_MT_window")
-#         layout.menu("TOPBAR_MT_shotgun")
+#         layout.menu("TOPBAR_MT_shotgrid")
 #         layout.menu("TOPBAR_MT_help")
 
 
@@ -278,10 +278,10 @@ def register():
     bpy.utils.register_class(QtWindowEventLoop)
     TOPBAR_MT_help = bpy.types.TOPBAR_MT_help
     TOPBAR_MT_editor_menus = insert_main_menu(
-        TOPBAR_MT_shotgun, before_menu_class=TOPBAR_MT_help
+        TOPBAR_MT_shotgrid, before_menu_class=TOPBAR_MT_help
     )
     bpy.utils.register_class(TOPBAR_MT_editor_menus)
-    bpy.utils.register_class(TOPBAR_MT_shotgun)
+    bpy.utils.register_class(TOPBAR_MT_shotgrid)
 
     load_factory_startup_post.append(startup)
 
@@ -292,4 +292,4 @@ def unregister():
     if not PYSIDE2_IMPORTED:
         return
 
-    bpy.utils.unregister_class(TOPBAR_MT_shotgun)
+    bpy.utils.unregister_class(TOPBAR_MT_shotgrid)

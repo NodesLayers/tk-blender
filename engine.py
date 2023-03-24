@@ -37,7 +37,7 @@ __contact__ = "https://www.linkedin.com/in/diegogh/"
 
 
 ENGINE_NAME = "tk-blender"
-ENGINE_NICE_NAME = "Shotgun Blender Engine"
+ENGINE_NICE_NAME = "ShotGrid Blender Engine"
 APPLICATION_NAME = "Blender"
 
 # env variable that control if to show the compatibility warning dialog
@@ -98,7 +98,7 @@ def on_scene_event_callback(*args, **kwargs):
         (exc_type, exc_value, exc_traceback) = sys.exc_info()
         message = ""
         message += (
-            "Message: Shotgun encountered a problem changing the Engine's context.\n"
+            "Message: ShotGrid encountered a problem changing the Engine's context.\n"
         )
         message += "Please contact support@shotgunsoftware.com\n\n"
         message += "Exception: %s - %s\n" % (exc_type, exc_value)
@@ -174,8 +174,8 @@ def refresh_engine():
         # could not detect context from path, will use the project context
         # for menus if it exists
         message = (
-            "Shotgun %s Engine could not detect the context\n"
-            "from the active document. Shotgun menus will be  \n"
+            "ShotGrid %s Engine could not detect the context\n"
+            "from the active document. ShotGrid menus will be  \n"
             "stay in the current context '%s' "
             "\n" % (APPLICATION_NAME, ctx)
         )
@@ -208,17 +208,17 @@ def refresh_engine():
             engine.change_context(ctx)
         except tank.TankError:
             message = (
-                "Shotgun %s Engine could not change context\n"
-                "to '%r'. Shotgun menu will be disabled!.\n"
+                "ShotGrid %s Engine could not change context\n"
+                "to '%r'. ShotGrid menu will be disabled!.\n"
                 "\n" % (APPLICATION_NAME, ctx)
             )
             display_warning(message)
-            engine.create_shotgun_menu(disabled=True)
+            engine.create_shotgrid_menu(disabled=True)
 
 
 class BlenderEngine(Engine):
     """
-    Shotgun Toolkit engine for Blender.
+    ShotGrid Toolkit engine for Blender.
     """
 
     def __init__(self, *args, **kwargs):
@@ -324,7 +324,7 @@ class BlenderEngine(Engine):
         """
         from tank.platform.qt import QtCore
 
-        # unicode characters returned by the shotgun api need to be converted
+        # unicode characters returned by the shotgrid api need to be converted
         # to display correctly in all of the app windows
         # tell QT to interpret C strings as utf-8
         utf8 = QtCore.QTextCodec.codecForName("utf-8")
@@ -351,7 +351,7 @@ class BlenderEngine(Engine):
 
         if app_ver < MIN_COMPATIBILITY_VERSION:
             msg = (
-                "Shotgun integration is not compatible with %s versions older than %s"
+                "ShotGrid integration is not compatible with %s versions older than %s"
                 % (
                     APPLICATION_NAME,
                     MIN_COMPATIBILITY_VERSION,
@@ -362,9 +362,9 @@ class BlenderEngine(Engine):
 
         if app_ver > MIN_COMPATIBILITY_VERSION:
             # show a warning that this version of Blender isn't yet fully tested
-            # with Shotgun:
+            # with ShotGrid:
             msg = (
-                "The Shotgun Pipeline Toolkit has not yet been fully "
+                "The ShotGrid Pipeline Toolkit has not yet been fully "
                 "tested with %s %s.  "
                 "You can continue to use Toolkit but you may experience "
                 "bugs or instability."
@@ -409,9 +409,9 @@ class BlenderEngine(Engine):
                 )
                 os.environ["SHOTGUN_SKIP_QTWEBENGINEWIDGETS_IMPORT"] = "1"
 
-        # default menu name is Shotgun but this can be overriden
+        # default menu name is ShotGrid but this can be overriden
         # in the configuration to be Sgtk in case of conflicts
-        self._menu_name = "Shotgun"
+        self._menu_name = "ShotGrid"
         if self.get_setting("use_sgtk_as_menu_name", False):
             self._menu_name = "Sgtk"
 
@@ -420,17 +420,17 @@ class BlenderEngine(Engine):
             setup_app_handlers()
             self.logger.debug("Registered open and save callbacks.")
 
-    def create_shotgun_menu(self, disabled=False):
+    def create_shotgrid_menu(self, disabled=False):
         """
-        Creates the main shotgun menu in Blender.
+        Creates the main shotgrid menu in Blender.
         Note that this only creates the menu, not the child actions
         :return: bool
         """
 
-        # only create the shotgun menu if not in batch mode and menu doesn't
+        # only create the shotgrid menu if not in batch mode and menu doesn't
         # already exist
         if self.has_ui:
-            self.logger.debug("Creating shotgun menu...")
+            self.logger.debug("Creating shotgrid menu...")
             tk_blender = self.import_module("tk_blender")
             self._menu_generator = tk_blender.MenuGenerator(self, self._menu_name)
             self._menu_generator.create_menu(disabled=disabled)
@@ -439,7 +439,7 @@ class BlenderEngine(Engine):
 
     def display_menu(self, pos=None):
         """
-        Shows the engine Shotgun menu.
+        Shows the engine ShotGrid menu.
         """
         if self._menu_generator:
             self._menu_generator.show(pos)
@@ -501,8 +501,8 @@ class BlenderEngine(Engine):
         """
         tank.platform.engine.set_current_engine(self)
 
-        # create the shotgun menu
-        self.create_shotgun_menu()
+        # create the shotgrid menu
+        self.create_shotgrid_menu()
 
         # let's close the windows created by the engine before exiting the
         # application
@@ -529,7 +529,7 @@ class BlenderEngine(Engine):
 
             # finally create the menu with the new context if needed
             if old_context != new_context:
-                self.create_shotgun_menu()
+                self.create_shotgrid_menu()
 
             self.sgtk.execute_core_hook_method(
                 tank.platform.constants.CONTEXT_CHANGE_HOOK,
@@ -650,13 +650,13 @@ class BlenderEngine(Engine):
         :type record: :class:`~python.logging.LogRecord`
         """
         # Give a standard format to the message:
-        #     Shotgun <basename>: <message>
+        #     ShotGrid <basename>: <message>
         # where "basename" is the leaf part of the logging record name,
         # for example "tk-multi-shotgunpanel" or "qt_importer".
         if record.levelno < logging.INFO:
-            formatter = logging.Formatter("Debug: Shotgun %(basename)s: %(message)s")
+            formatter = logging.Formatter("Debug: ShotGrid %(basename)s: %(message)s")
         else:
-            formatter = logging.Formatter("Shotgun %(basename)s: %(message)s")
+            formatter = logging.Formatter("ShotGrid %(basename)s: %(message)s")
 
         msg = formatter.format(record)
 

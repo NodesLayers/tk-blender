@@ -29,7 +29,7 @@ __contact__ = "https://www.linkedin.com/in/diegogh/"
 
 
 ENGINE_NAME = "tk-blender"
-ENGINE_NICE_NAME = "Shotgun Blender Engine"
+ENGINE_NICE_NAME = "ShotGrid Blender Engine"
 
 logger = sgtk.LogManager.get_logger(__name__)
 
@@ -69,14 +69,14 @@ def start_toolkit_classic():
     # Get the name of the engine to start from the environment
     env_engine = os.environ.get("SGTK_ENGINE")
     if not env_engine:
-        msg = "Shotgun: Missing required environment variable SGTK_ENGINE."
+        msg = "ShotGrid: Missing required environment variable SGTK_ENGINE."
         display_error(msg)
         return
 
     # Get the context load from the environment.
     env_context = os.environ.get("SGTK_CONTEXT")
     if not env_context:
-        msg = "Shotgun: Missing required environment variable SGTK_CONTEXT."
+        msg = "ShotGrid: Missing required environment variable SGTK_CONTEXT."
         display_error(msg)
         return
     try:
@@ -84,7 +84,7 @@ def start_toolkit_classic():
         context = sgtk.context.deserialize(env_context)
     except Exception as e:
         msg = (
-            "Shotgun: Could not create context! Shotgun Pipeline Toolkit"
+            "ShotGrid: Could not create context! ShotGrid Pipeline Toolkit"
             " will be disabled. Details: %s" % e
         )
         etype, value, tb = sys.exc_info()
@@ -103,7 +103,7 @@ def start_toolkit_classic():
         if not engine:
             engine = sgtk.platform.start_engine(env_engine, context.sgtk, context)
     except Exception as e:
-        msg = "Shotgun: Could not start engine. Details: %s" % e
+        msg = "ShotGrid: Could not start engine. Details: %s" % e
         etype, value, tb = sys.exc_info()
         msg += "".join(traceback.format_exception(etype, value, tb))
         display_error(msg)
@@ -120,7 +120,7 @@ def start_toolkit():
     try:
         import sgtk
     except Exception as e:
-        msg = "Shotgun: Could not import sgtk! Disabling for now: %s" % e
+        msg = "ShotGrid: Could not import sgtk! Disabling for now: %s" % e
         display_error(msg)
         return
 
@@ -133,7 +133,7 @@ def start_toolkit():
     # Check if a file was specified to open and open it.
     file_to_open = os.environ.get("SGTK_FILE_TO_OPEN")
     if file_to_open:
-        msg = "Shotgun: Opening '%s'..." % file_to_open
+        msg = "ShotGrid: Opening '%s'..." % file_to_open
         display_info(msg)
         import bpy
 

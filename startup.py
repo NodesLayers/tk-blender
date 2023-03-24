@@ -83,7 +83,7 @@ class BlenderLauncher(SoftwareLauncher):
         # by appending it to the env PYTHONPATH.
         scripts_path = os.path.join(self.disk_location, "resources", "scripts")
 
-        startup_path = os.path.join(scripts_path, "startup", "Shotgun_menu.py")
+        startup_path = os.path.join(scripts_path, "startup", "Shotgrid_menu.py")
 
         args += "-P " + startup_path
 
