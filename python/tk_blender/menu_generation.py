@@ -87,7 +87,7 @@ class MenuGenerator(object):
 
     def create_menu(self, disabled=False):
         """
-        Render the entire Shotgun menu.
+        Render the entire ShotGrid menu.
         In order to have commands enable/disable themselves based on the
         enable_callback, re-create the menu items every time.
         """
@@ -204,7 +204,7 @@ class MenuGenerator(object):
 
         self._add_divider(ctx_menu)
 
-        self._add_menu_item("Jump to Shotgun", ctx_menu, self._jump_to_sg)
+        self._add_menu_item("Jump to ShotGrid", ctx_menu, self._jump_to_sg)
 
         # Add the menu item only when there are some file system locations.
         if ctx.filesystem_locations:
@@ -224,7 +224,7 @@ class MenuGenerator(object):
 
     def _jump_to_sg(self):
         """
-        Jump to shotgun, launch web browser
+        Jump to shotgrid, launch web browser
         """
         url = self._engine.context.shotgun_url
         QtGui.QDesktopServices.openUrl(QtCore.QUrl(url))

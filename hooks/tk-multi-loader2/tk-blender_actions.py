@@ -95,7 +95,7 @@ class BlenderActions(HookBaseClass):
         In this case, when more than  one object isvreturned for an action, use
         the params key to pass additional data into the run_action hook.
 
-        :param sg_publish_data: Shotgun data dictionary with all the standard
+        :param sg_publish_data: ShotGrid data dictionary with all the standard
                                 publish fields.
         :param actions: List of action strings which have been
                         defined in the app configuration.
@@ -224,7 +224,7 @@ class BlenderActions(HookBaseClass):
         Each entry will have the following values:
 
             name: Name of the action to execute
-            sg_publish_data: Publish information coming from Shotgun
+            sg_publish_data: Publish information coming from ShotGrid
             params: Parameters passed down from the generate_actions hook.
 
         .. note::
@@ -255,7 +255,7 @@ class BlenderActions(HookBaseClass):
         :param name: Action name string representing one of the items returned
                      by generate_actions.
         :param params: Params data, as specified by generate_actions.
-        :param sg_publish_data: Shotgun data dictionary with all the standard
+        :param sg_publish_data: ShotGrid data dictionary with all the standard
                                 publish fields.
         :returns: No return value expected.
         """
@@ -305,7 +305,7 @@ class BlenderActions(HookBaseClass):
         if you used the create settings dialog.
 
         :param path: Path to file.
-        :param sg_publish_data: Shotgun data dictionary with all the standard
+        :param sg_publish_data: ShotGrid data dictionary with all the standard
                                 publish fields.
         """
         if not os.path.exists(path):
@@ -326,7 +326,7 @@ class BlenderActions(HookBaseClass):
         if you used the create settings dialog.
 
         :param path: Path to file.
-        :param sg_publish_data: Shotgun data dictionary with all the standard
+        :param sg_publish_data: ShotGrid data dictionary with all the standard
                                 publish fields.
         """
         if not os.path.exists(path):
@@ -347,7 +347,7 @@ class BlenderActions(HookBaseClass):
         if you used the create settings dialog.
 
         :param path: Path to file.
-        :param sg_publish_data: Shotgun data dictionary with all the standard
+        :param sg_publish_data: ShotGrid data dictionary with all the standard
                                 publish fields.
         """
         if not os.path.exists(path):
@@ -391,7 +391,7 @@ class BlenderActions(HookBaseClass):
         Create a new clip compositor node and load the selected publish into it.
 
         :param path: Path to file.
-        :param sg_publish_data: Shotgun data dictionary with all the standard
+        :param sg_publish_data: ShotGrid data dictionary with all the standard
                                 publish fields.
         """
         if not bpy.context.scene.node_tree:
@@ -426,7 +426,7 @@ class BlenderActions(HookBaseClass):
         Create a new image compositor node and load the selected publish into it.
 
         :param path: Path to file.
-        :param sg_publish_data: Shotgun data dictionary with all the standard
+        :param sg_publish_data: ShotGrid data dictionary with all the standard
                                 publish fields.
         """
 
@@ -461,7 +461,7 @@ class BlenderActions(HookBaseClass):
         Note we always use channel 2
 
         :param path: Path to file.
-        :param sg_publish_data: Shotgun data dictionary with all the standard
+        :param sg_publish_data: ShotGrid data dictionary with all the standard
                                 publish fields.
         """
 
@@ -479,7 +479,7 @@ class BlenderActions(HookBaseClass):
         Note we always use channel 1
 
         :param path: Path to file.
-        :param sg_publish_data: Shotgun data dictionary with all the standard
+        :param sg_publish_data: ShotGrid data dictionary with all the standard
                                 publish fields.
         """
 
@@ -497,7 +497,7 @@ class BlenderActions(HookBaseClass):
         Note we always use channel 3
 
         :param path: Path to file.
-        :param sg_publish_data: Shotgun data dictionary with all the standard
+        :param sg_publish_data: ShotGrid data dictionary with all the standard
                                 publish fields.
         """
 
