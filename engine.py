@@ -514,6 +514,10 @@ class BlenderEngine(Engine):
         # Run a series of app instance commands at startup.
         self._run_app_instance_commands()
 
+        # set the FPS based on the context
+        if self.get_setting("set_fps"):
+            self.set_fps_from_sg()
+
     def post_context_change(self, old_context, new_context):
         """
         Runs after a context change. The Blender event watching will
@@ -537,6 +541,13 @@ class BlenderEngine(Engine):
                 previous_context=old_context,
                 current_context=new_context,
             )
+
+        if not old_context == new_context:
+            self.log_debug("Context changed from %s to %s" % (old_context, new_context))
+
+            # set the FPS based on the context
+            if self.get_setting("set_fps"):
+                self.set_fps_from_sg()
 
     def _run_app_instance_commands(self):
         """
@@ -698,3 +709,57 @@ class BlenderEngine(Engine):
                 self.logger.error(
                     "Cannot close dialog %s: %s", dialog_window_title, exception
                 )
+
+    def set_fps_from_sg(self):
+        """
+        Set the FPS based on Flow Production Tracking data.
+        Uses the entity_fps_fields setting to determine the field to use.
+        """
+        self.logger.info("Setting FPS based on Flow Production Tracking data...")
+
+        # Get the context
+        ctx = self.context
+
+        # fps entity fields
+        entity_fps_fields = self.get_setting("entity_fps_fields")
+
+        # No entity in the context, set the project fps
+        project_data = self.shotgun.find_one(
+            "Project", [["id", "is", ctx.project["id"]]], [entity_fps_fields.get("Project")]
+        )
+
+        if not hasattr(ctx, "entity"):
+            # No entity in the context
+            self.logger.info("No entity in the context, setting FPS based on project")
+            if project_data.get(entity_fps_fields.get("Project")):
+                fps = project_data.get(entity_fps_fields.get("Project"))
+                bpy.context.scene.render.fps = int(fps)
+                self.logger.info("Setting FPS to %s based on project", fps)
+            return
+
+        if ctx.entity is None:
+            if project_data.get(entity_fps_fields.get("Project")):
+                fps = project_data.get(entity_fps_fields.get("Project"))
+                bpy.context.scene.render.fps = int(fps)
+                self.logger.info("Setting FPS to %s based on project", fps)
+            return
+
+        if ctx.entity:
+            entity_type = ctx.entity["type"]
+            if entity_type not in entity_fps_fields:
+                fps = project_data.get(entity_fps_fields.get("Project"))
+                bpy.context.scene.render.fps = int(fps)
+                self.logger.info("Setting FPS to %s based on project", fps)
+                return
+            else:
+                entity_data = self.shotgun.find_one(
+                    entity_type,
+                    [["id", "is", ctx.entity["id"]],],
+                    [entity_fps_fields.get(entity_type)],
+                )
+                self.logger.debug("Entity data: %s", entity_data)
+
+                if entity_data.get(entity_fps_fields.get(entity_type)):
+                    fps = entity_data.get(entity_fps_fields.get(entity_type))
+                    bpy.context.scene.render.fps = int(fps)
+                    self.logger.info("Setting FPS to %s based on %s", fps, entity_type)

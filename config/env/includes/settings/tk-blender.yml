@@ -69,7 +69,7 @@ settings.tk-blender.project:
     tk-multi-workfiles2: "@settings.tk-multi-workfiles2.blender.project"
   menu_favourites:
   - {app_instance: tk-multi-workfiles2, name: File Open...}
-  debug_logging: true
+  debug_logging: false
   compatibility_dialog_min_version: 3
   automatic_context_switch: true
   location: "@engines.tk-blender.location"

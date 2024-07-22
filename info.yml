@@ -90,6 +90,20 @@ configuration:
         values:
             type: str
 
+    set_fps:
+        type: bool
+        description: "Controls whether the engine should set the FPS of the Blender scene to match
+                     the Shotgun project's FPS. Defaults to True."
+        default_value: True
+
+    entity_fps_fields:
+        type: dict
+        description: "A dictionary of entity types and their corresponding FPS fields in Shotgun.
+                     The engine will use this information to set the Blender scene's FPS to match
+                     the FPS of the Shotgun project. The entity type should be the key and the
+                     corresponding FPS field should be the value. Defaults to {'Project': 'fps'}."
+        default_value: {'Project': 'sg_fps'}
+
 # the ShotGrid fields that this engine needs in order to operate correctly
 requires_shotgun_fields:
 
